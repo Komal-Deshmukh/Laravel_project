@@ -47,24 +47,22 @@ class UserController extends Controller
 	
 	public function saveUser(Request $request)
     {
-		//return true;
-		///$token = csrf_token();
 		$v = Validator::make($request->all(), [
-			'first_name' => 'required|alpha|max:50|min:3',       
-			'last_name' => 'required|alpha|max:50|min:3',       
-			'email' => 'required|email|unique:users|max:50|min:10', 
-			'address1' => 'required|max:200|min:3', 
-			'address2' => 'required|max:200|min:3', 
-			'city' => 'required|max:50|min:3', 
-			'state' => 'required|max:100|min:3', 
-			'zip' => 'required|numeric|min:3', 
-			'country' => 'required|max:50|min:3', 
+				'first_name' => 'required|alpha|max:50|min:3',       
+				'last_name' => 'required|alpha|max:50|min:3',       
+				'email' => 'required|email|unique:users|max:50|min:10', 
+				'address1' => 'required|max:200|min:3', 
+				'address2' => 'required|max:200|min:3', 
+				'city' => 'required|max:50|min:3', 
+				'state' => 'required|max:100|min:3', 
+				'zip' => 'required|numeric|min:3', 
+				'country' => 'required|max:50|min:3', 
 			]);
         if ($v->fails()){
-			 return $v->messages()->get('*');
+			return $v->messages()->get('*');
+			
 		 }else{
 			$users = new Users;
-
 			$users->first_name = $request->first_name;
 			$users->last_name = $request->last_name;
 			$users->email = $request->email;
@@ -81,10 +79,8 @@ class UserController extends Controller
 			$useraddress->country = $request->country;
 			$users->address()->save($useraddress);
 			
-			//$data=['table_name'=>'users','action'=>'create'];
 			$data['table_name']='users';
 			$data['action']='create';
-			//json_encode($data);
 			TableAction::dispatch(json_encode($data));
 		 }
 	}
